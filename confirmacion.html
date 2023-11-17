@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmación de Servicio</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="style1.css">
+</head>
+<body>
+
+    <nav>
+        <div class="logo-container">
+            <img src="img/logo.png" alt="Logo">
+        </div>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Contacto</a></li>
+            <li><a href="#">Nosotros</a></li>
+            <!-- Agrega más enlaces según sea necesario -->
+        </ul>
+    </nav>
+
+    <div class="service-details">
+        <div class="image-container">
+            <img id="selected-car-image" src="img/c2.jpg" alt="Imagen del carro seleccionado">
+        </div>
+        <p id="selected-price">Precio: $20.00</p>
+    </div>
+
+    <div class="user-details">
+        <h2>Detalles del Usuario</h2>
+        <form id="user-form" action="index.html">
+            <div class="form-group">
+                <label for="adults">Adultos:</label>
+                <input type="number" id="adults" name="adults" min="0">
+            </div>
+            <div class="form-group">
+                <label for="children">Niños:</label>
+                <input type="number" id="children" name="children" min="0">
+            </div>
+            <div class="form-group">
+                <label for="name">Nombre:</label>
+                <input type="text" id="name" name="name">
+            </div>
+            <div class="form-group">
+                <label for="phone">Número de Celular:</label>
+                <input type="tel" id="phone" name="phone">
+            </div>
+            <button type="button" onclick="enviarMensaje()">Enviar Mensaje</button>
+            <button type="submit">Seleccionar Otro Servicio</button>
+        </form>
+    </div>
+
+    <footer>
+        <div class="social-buttons">
+            <a href="#" class="social-button facebook">Facebook</a>
+            <a href="#" class="social-button instagram">Instagram</a>
+            <a href="#" class="social-button twitter">Twitter</a>
+        </div>
+
+        <div class="company-summary">
+            <h3>Benito S.A.C</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed accumsan ligula sit amet dui feugiat, vel ultrices nunc dapibus.</p>
+            <!-- Puedes agregar más información según sea necesario -->
+        </div>
+    </footer>
+
+    <script src="confirmation.js"></script>
+    <script>
+        function enviarMensaje() {
+            var phoneNumber = document.getElementById("phone").value;
+
+            var data = new FormData();
+            data.append("appkey", "26adee46-a8f8-46a4-bdab-3ba447aab51e");
+            data.append("authkey", "Y3vda2G1uoBW9sB8S4rl89Rc2u5F3xfDbYHaCFHgPqDg0H3sc3");
+            data.append("to", 907750528);  // Utiliza el número de teléfono del usuario
+            data.append("message", "Buenas, Solicité el servicio de taxi");
+            data.append("sandbox", "false");
+
+            fetch('https://qr.chat.buho.la/api/create-message', {
+                method: 'POST',
+                body: data
+            })
+            .then(response => response.text())
+            .then(result => {
+                console.log(result);
+                // Puedes agregar aquí código adicional para manejar la respuesta, si es necesario
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
